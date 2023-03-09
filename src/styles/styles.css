@@ -1,0 +1,89 @@
+:root,
+.display {
+  background-color: aliceblue;
+}
+.post {
+  padding: 10px;
+  margin: 10px auto;
+  border: 1px solid #eee;
+  box-shadow: 3px 2px 2px #ccc;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  background-color: rgb(24, 40, 56);
+  color: white;
+}
+textarea.form-control {
+  display: table;
+}
+.chart-line {
+  height: 50%;
+  width: 100% !important;
+}
+.list-group-item {
+  cursor: pointer;
+}
+.feed {
+  background-color: aliceblue;
+}
+.formDisplay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 1.5em;
+  font-weight: bold;
+  background-color: aliceblue;
+  color: rgb(0, 16, 85);
+}
+label {
+  font-size: 15px;
+}
+.formButton {
+  align-items: center;
+}
+.board {
+  display: contents;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+  grid-column-gap: 10px;
+  column-gap: 10px;
+  grid-row-gap: 10px;
+  row-gap: 10px;
+  background-color: lightgray;
+}
+.addPost {
+  position: inherit;
+  width: 100%;
+  display: inline-flex;
+  align-items: revert;
+  text-align: -webkit-center;
+  flex-direction: column;
+  font-weight: bold;
+  background-color: aliceblue;
+  color: rgb(0, 16, 85);
+}
+textarea {
+  width: 50% !important;
+}
+.custom-chart {
+  display: block;
+  box-sizing: border-box;
+  height: 450px;
+  width: 600px;
+}
+.Empty-Wall {
+  width: 100%;
+  height: 100%;
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 1.5em;
+  color: rgb(0, 16, 85);
+}

@@ -1,0 +1,23 @@
+USERS : 
+{
+USER_NAME : John@Smith
+EMAIL : JohnSmith@gmail.com
+PASSWORD : John@123
+}
+{
+USER_NAME : Nicole@Gev
+EMAIL : Nicole@gmail.com
+PASSWORD : Nicole@123
+}
+{
+USER_NAME : Kiril@Mor
+EMAIL : Kiril@gmail.com
+PASSWORD : Kiril@123
+}
+----------------------------------------------------------------------------------------
+ADMIN :
+{
+USER_NAME : Admin@Admin
+EMAIL : Admin@gmail.com
+PASSWORD : Admin@123
+}
