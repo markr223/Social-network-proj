@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { loadPostsFromServer } from "../store/actions";
 import Chart from "./common/chart";
 import ListGroup from "./common/listGroup";
+import { serverURI, defaultConfig } from "../consts/consts";
 
 class PostsDetails extends React.Component {
   state = {
@@ -17,7 +18,8 @@ class PostsDetails extends React.Component {
 
   handleChosenPost = async (post) => {
     const { data } = await axios.get(
-      "http://localhost:43619/api/Like/GetLikes/" + post.postId
+      serverURI + "/api/Like/GetLikes/" + post.postId,
+      defaultConfig
     );
     this.setState({ currentPost: post, currentPostLikes: data });
   };

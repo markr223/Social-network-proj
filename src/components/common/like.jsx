@@ -1,16 +1,22 @@
 import React from "react";
+import {LikeOutlined, LikeFilled} from "@ant-design/icons";
 
 export default function Like({ liked, onLike, likesCount }) {
-  let classes = "fa fa-heart";
-  if (!liked) classes += "-o";
   return (
     <div>
-      <i
-        onClick={onLike}
-        style={{ cursor: "pointer", margin: "5px" }}
-        className={classes}
-        aria-hidden="true"
-      />
+      { !liked ? 
+        <LikeOutlined 
+          onClick={onLike}
+          className="like-icon"
+          aria-hidden="true"
+        />
+        :
+        <LikeFilled
+          onClick={onLike}
+          className="like-icon"
+          aria-hidden="true"
+        />
+      }
       {likesCount}
     </div>
   );

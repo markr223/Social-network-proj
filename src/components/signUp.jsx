@@ -37,8 +37,9 @@ class SignUp extends React.Component {
   handleSignUp = async (history, newUser) => {
     try {
       const response = await axios.post(
-        "http://localhost:43619/api/Auth/Register",
-        newUser
+        Inputs.serverURI + "/api/Auth/Register",
+        newUser,
+        Inputs.defaultConfig
       );
       toast.success(response.data.message);
       setTimeout(() => (window.location = "/login"), 1000);

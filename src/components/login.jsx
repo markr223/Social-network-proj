@@ -34,8 +34,9 @@ class Login extends React.Component {
     this.setState({ errors: errors || {} });
     try {
       const { data: jwt } = await axios.post(
-        "http://localhost:43619/api/Auth/Login",
-        user
+        Inputs.serverURI + "/api/Auth/Login",
+        user,
+        Inputs.defaultConfig
       );
       localStorage.setItem("token", jwt.token);
       toast.success("Logging In...");
@@ -43,7 +44,6 @@ class Login extends React.Component {
     } catch (ex) {
       toast.error("Email or Password Incorrect, Please Try Again or Sign Up");
     }
-    // history.replace('/');
   };
   handleInput = (e, value) => {
     let user = { ...this.state.user };

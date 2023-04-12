@@ -31,7 +31,7 @@ const dateNow = new Date();
 export const currentDate =
   dateNow.getFullYear() +
   "-" +
-  (dateNow.getMonth() + 1) +
+  (dateNow.getMonth() < 10 ? "0" + (dateNow.getMonth() + 1) : dateNow.getMonth() + 1) +
   "-" +
   dateNow.getDate();
 // export const NO_POSTS_TO_SHOW = (
@@ -51,3 +51,12 @@ export const handleUniqueDates = (data) => {
 
   return datesSliced.filter(onlyUnique);
 };
+
+export const serverURI = "https://79ae-5-102-216-35.ngrok-free.app";
+export const defaultConfig = {
+    headers: {
+      "ngrok-skip-browser-warning": "any value",
+      "Accept": "application/json",
+      "content-type": "application/json"
+    }
+  };

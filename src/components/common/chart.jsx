@@ -14,7 +14,7 @@ export default function Chart({ currentPost, postLikes, postId }) {
         postId,
       };
       axios
-        .post("http://localhost:43619/api/Like/GetLikesByDate", request)
+        .post(consts.serverURI + "/api/Like/GetLikesByDate", request, consts.defaultConfig)
         .then((response) => {
           const { data } = response;
           likes.push(data.length);

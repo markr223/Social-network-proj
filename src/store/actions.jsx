@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "./actionType";
+import { serverURI, defaultConfig } from "../consts/consts";
 
 const getPosts = (posts) => {
   return {
@@ -12,7 +13,7 @@ const getPosts = (posts) => {
 export const loadPostsFromServer = () => {
   return (dispatch) => {
     axios
-      .get("http://localhost:43619/api/Post/GetAllPosts")
+      .get(serverURI + "/api/Post/GetAllPosts", defaultConfig)
       .then((response) => {
         dispatch(getPosts(response.data));
       })

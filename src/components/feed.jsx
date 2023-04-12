@@ -31,7 +31,8 @@ class Feed extends React.Component {
   getAllUsers = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:43619/api/User/GetAllUsers"
+        Inputs.serverURI + "/api/User/GetAllUsers",
+        Inputs.defaultConfig
       );
       this.setState({ users: data });
     } catch (ex) {}
@@ -39,7 +40,8 @@ class Feed extends React.Component {
   getPostsByUser = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:43619/api/Post/GetUserPosts/" + this.state.post.userId
+        Inputs.serverURI + "/api/Post/GetUserPosts/" + this.state.post.userId,
+        Inputs.defaultConfig
       );
       this.setState({ posts: data });
     } catch (ex) {}
@@ -67,8 +69,9 @@ class Feed extends React.Component {
   handleAddingPost = async (post) => {
     try {
       await axios.post(
-        "http://localhost:43619/api/Post",
-        post
+        Inputs.serverURI + "/api/Post",
+        post, 
+        Inputs.defaultConfig
       );
       toast.success("Post Successfully Added :)");
       setTimeout(() => (window.location = "/feed"), 1000);
@@ -80,7 +83,7 @@ class Feed extends React.Component {
   handleChosenUser = async (user) => {
     try {
       const { data } = await axios.get(
-        "http://localhost:43619/api/Post/GetUserPosts/" + user.id
+        Inputs.serverURI + "/api/Post/GetUserPosts/" + user.id , Inputs.defaultConfig
       );
       data.length === 0
         ? this.setState({ emptyWall: true })
@@ -120,9 +123,9 @@ class Feed extends React.Component {
                 activateButton={this.validate()}
               />
             </div>
-            <div className="row">
-              <h6>{chosentUser.email || "My"} Posts : </h6>
-              {!emptyWall //[...posts].reverse()
+            <h6>{chosentUser.email || "My"} Posts : </h6>
+            <div className="feed-posts-container">
+              {!emptyWall
                 ? [...posts].reverse().map((post) => (
                     <Post
                       key={post.postId}

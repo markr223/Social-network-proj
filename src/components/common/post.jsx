@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import Like from "./like";
+import { Card, Space, Avatar } from 'antd';
+import {UserOutlined} from '@ant-design/icons';
 import * as consts from "../../consts/consts";
 
 class Post extends React.Component {
@@ -22,7 +24,8 @@ class Post extends React.Component {
     const like = this.state.like;
     try {
       const { data } = await axios.get(
-        "http://localhost:43619/api/Like/GetLikes/" + like.postId
+        consts.serverURI + "/api/Like/GetLikes/" + like.postId,
+        consts.defaultConfig
       );
       for (let postLikes of data)
         if (postLikes.userId === this.props.currentUser.id)
@@ -42,10 +45,11 @@ class Post extends React.Component {
     const liked = this.state.liked;
     this.setState({ liked: !liked });
     try {
-      await axios.post("http://localhost:43619/api/Like", like);
+      await axios.post( consts.serverURI + "/api/Like", like, consts.defaultConfig);
       try {
         const { data } = await axios.get(
-          "http://localhost:43619/api/Like/GetLikes/" + like.postId
+          consts.serverURI + "/api/Like/GetLikes/" + like.postId,
+          consts.defaultConfig
         );
         this.setState({ likesCount: data.length });
       } catch (ex) {
@@ -58,18 +62,39 @@ class Post extends React.Component {
   render() {
     const { header, description } = this.props;
     const { liked, likesCount, like } = this.state;
+    const { Meta } = Card;
     return (
-      <div className="container">
-        <div className="post m-2">
-          <h3>{header}</h3>
-          <h6>{description}</h6>
-          <Like
-            onLike={() => this.handleLike(like)}
-            liked={liked}
-            likesCount={likesCount}
+      <Space direction="vertical" className="post-container">
+        <Card 
+          actions={[
+            <Like
+              onLike={() => this.handleLike(like)}
+              liked={liked}
+              likesCount={likesCount}></Like>]}
+        > 
+          <Meta
+            className="post"
+            avatar={<Avatar className="post-avatar">UN</Avatar>}
+            title={<div>
+              <span>{header}</span>
+              <div className="post-title-date">12/04/2023</div>
+            </div>}
+            description={description}
           />
-        </div>
-      </div>
+        </Card>
+      </Space>
+
+      // <div className="post-container">
+      //   <div className="post m-2">
+      //     <span className="post-header">{header}</span>
+      //     <div className="post-desc">{description}</div>
+      //     <Like
+      //       onLike={() => this.handleLike(like)}
+      //       liked={liked}
+      //       likesCount={likesCount}
+      //     />
+      //   </div>
+      // </div>
     );
   }
 }

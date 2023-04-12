@@ -1,18 +1,44 @@
 :root,
 .display {
-  background-color: aliceblue;
+  background-color: #353941;
+}
+.feed-posts-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.post-container{
+  width: 40vh;
+  align-self: center;
+  margin-bottom: 35px;
 }
 .post {
+  width: 100%;
   padding: 10px;
   margin: 10px auto;
-  border: 1px solid #eee;
-  box-shadow: 3px 2px 2px #ccc;
-  box-sizing: border-box;
   width: 100%;
-  text-align: center;
+  text-align: left;
   border-radius: 10px;
-  background-color: rgb(24, 40, 56);
-  color: white;
+  color: #ffffff;
+}
+.post-avatar {
+  background-color: #5baaec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.post-title-date{
+  font-size: 12px;
+  color: gainsboro;
+}
+.ant-card-meta-avatar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ant-card-meta-title{
+  font-size: 30px;
+  font-family: rubik, arial !important;
 }
 textarea.form-control {
   display: table;
@@ -21,11 +47,36 @@ textarea.form-control {
   height: 50%;
   width: 100% !important;
 }
-.list-group-item {
+.list-group-container{
+  height: 93vh;
+  width: 10vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #5f85db;
+}
+.list-group-title{
+  font-size: 24px;
+}
+.list-group {
+  display: flex;
+  align-items: center;
+  margin-left: 5%;
+  width: 10vh;
+  margin-top: 2vh;
+}
+.list-group-item-unselected {
+  background-color: #5baaec;
   cursor: pointer;
 }
+.list-group-item-selected {
+  background-color: black;
+  color: white;
+}
+.list-group-item-name{
+  color: #33425b;
+}
 .feed {
-  background-color: aliceblue;
+  background-color: #353941;
 }
 .formDisplay {
   position: fixed;
@@ -37,8 +88,8 @@ textarea.form-control {
   flex-direction: column;
   font-size: 1.5em;
   font-weight: bold;
-  background-color: aliceblue;
-  color: rgb(0, 16, 85);
+  background-color: #353941;
+  color: #ffffff;
 }
 label {
   font-size: 15px;
@@ -54,7 +105,7 @@ label {
   column-gap: 10px;
   grid-row-gap: 10px;
   row-gap: 10px;
-  background-color: lightgray;
+  background-color: #353941;
 }
 .addPost {
   position: inherit;
@@ -64,8 +115,8 @@ label {
   text-align: -webkit-center;
   flex-direction: column;
   font-weight: bold;
-  background-color: aliceblue;
-  color: rgb(0, 16, 85);
+  background-color: #353941;
+  color: #ffffff
 }
 textarea {
   width: 50% !important;
@@ -85,5 +136,10 @@ textarea {
   justify-content: center;
   flex-direction: column;
   font-size: 1.5em;
-  color: rgb(0, 16, 85);
+  color: #ffffff;
+}
+.like-icon {
+  cursor: pointer;
+  display: inline-flex;
+  margin-right: 5px;
 }
