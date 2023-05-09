@@ -1,11 +1,14 @@
 import React from "react";
 import Joi from "joi-browser";
+import { Layout, Button } from 'antd';
 import axios from "axios";
 import { toast } from "react-toastify";
 import Form from "./common/form";
 import Post from "./common/post";
 import ListGroup from "./common/listGroup";
 import * as Inputs from "../consts/consts";
+import NewPostModal from "./common/newPostModal";
+import { FormOutlined, SmileFilled } from "@ant-design/icons";
 
 class Feed extends React.Component {
   state = {};
@@ -26,6 +29,7 @@ class Feed extends React.Component {
       chosentUser: {},
       errors: {},
       posts: [],
+      isModalOpen: false
     };
   }
   getAllUsers = async () => {
@@ -37,6 +41,7 @@ class Feed extends React.Component {
       this.setState({ users: data });
     } catch (ex) {}
   };
+
   getPostsByUser = async () => {
     try {
       const { data } = await axios.get(
@@ -46,6 +51,7 @@ class Feed extends React.Component {
       this.setState({ posts: data });
     } catch (ex) {}
   };
+
   componentDidMount() {
     this.getPostsByUser();
     this.getAllUsers();
@@ -66,6 +72,7 @@ class Feed extends React.Component {
     post[value] = e.currentTarget.value;
     this.setState({ post });
   };
+
   handleAddingPost = async (post) => {
     try {
       await axios.post(
@@ -80,6 +87,7 @@ class Feed extends React.Component {
       toast.error(message);
     }
   };
+
   handleChosenUser = async (user) => {
     try {
       const { data } = await axios.get(
@@ -93,14 +101,31 @@ class Feed extends React.Component {
     window.scrollTo(0, 0);
   };
 
+  showModal = () => {
+    this.setState({isModalOpen: true});
+  };
+
+  handleCancel = () => {
+    this.setState({isModalOpen: false});
+  };
+
   render() {
-    const { post, errors, chosentUser, users, posts, emptyWall } = this.state;
+    const { post, errors, chosentUser, users, posts, emptyWall, isModalOpen } = this.state;
     const { loggedUser } = this.props;
+    const { Content, Sider } = Layout;
     return (
-      <div className="row feed">
-        <div className="row">
-          <div className="col-3">
-            <ListGroup
+      <>
+      <Layout>
+          <Sider 
+          style={{
+            overflow: 'auto',
+            height: '100vh',
+            position: 'sticky',
+            left: 0,
+            top: 0,
+            bottom: 0,
+          }}>
+          <ListGroup
               dataList={users}
               currentItem={chosentUser}
               onChosenItem={this.handleChosenUser}
@@ -108,38 +133,48 @@ class Feed extends React.Component {
               id={"id"}
               name={"userName"}
             />
-          </div>
-          <div className="col-6">
+          </Sider>
+          <Content>
             <div className="row-2 addPost">
-              <h2 className="m-2">New Post </h2>
-              <Form
-                buttonLabel="Add Post"
-                formValues={post}
-                formInputs={Inputs.ADD_POST_FORM_INPUTS}
-                onInputChange={this.handleInput}
-                onSubmit={() => this.handleAddingPost(post)}
-                errors={errors}
-                inputTextArea={true}
-                activateButton={this.validate()}
-              />
+              <div>
+                <div className="welcome-container">
+                  <div>
+                    <span className="welcome-message">{<SmileFilled className="welcome-icon"/>} Hello, {loggedUser.userName} </span>
+                    <span className="welcome-message-sec">this is your updated feed</span>
+                  </div>
+                  <Button className="welcome-new-post-button" type="primary" icon={<FormOutlined className="welcome-icon-button"/>} onClick={() => this.showModal()}>
+                    Write new post
+                  </Button>
+                </div>
+                <NewPostModal isModalOpen={isModalOpen} handleOk={() => this.handleAddingPost(post)} handleCancel={() => this.handleCancel()}>
+                  <Form
+                    formValues={post}
+                    formInputs={Inputs.ADD_POST_FORM_INPUTS}
+                    onInputChange={this.handleInput}
+                    onSubmit={() => this.handleAddingPost(post)}
+                    errors={errors}
+                    inputTextArea={true}
+                    activateButton={this.validate()}
+                  />
+                </NewPostModal> 
+              </div>
+              <div className="feed-posts-container">
+                {!emptyWall
+                  ? [...posts].reverse().map((post) => (
+                      <Post
+                        key={post.postId}
+                        currentUser={loggedUser}
+                        post={post}
+                        header={post.header}
+                        description={post.description}
+                      />
+                    ))
+                  : <spna>BLA BLA</spna>}
+              </div>
             </div>
-            <h6>{chosentUser.email || "My"} Posts : </h6>
-            <div className="feed-posts-container">
-              {!emptyWall
-                ? [...posts].reverse().map((post) => (
-                    <Post
-                      key={post.postId}
-                      currentUser={loggedUser}
-                      post={post}
-                      header={post.header}
-                      description={post.description}
-                    />
-                  ))
-                : <spna>BLA BLA</spna>}
-            </div>
-          </div>
-        </div>
-      </div>
+          </Content>
+          </Layout>
+      </>
     );
   }
 }

@@ -27,14 +27,6 @@ export default function Form({
         ))}
       </form>
       <div className="formButton">
-        <button
-          disabled={activateButton}
-          type="submit"
-          onClick={onSubmit}
-          className="btn btn-primary m-2"
-        >
-          {buttonLabel}
-        </button>
       </div>
     </div>
   );

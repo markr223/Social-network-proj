@@ -48,11 +48,11 @@ textarea.form-control {
   width: 100% !important;
 }
 .list-group-container{
-  height: 93vh;
+  height: 100%;
   width: 10vh;
   display: flex;
   flex-direction: column;
-  background-color: #5f85db;
+  color: #5f85db;
 }
 .list-group-title{
   font-size: 24px;
@@ -110,6 +110,7 @@ label {
 .addPost {
   position: inherit;
   width: 100%;
+  height: 100%;
   display: inline-flex;
   align-items: revert;
   text-align: -webkit-center;
@@ -127,6 +128,35 @@ textarea {
   height: 450px;
   width: 600px;
 }
+.welcome-container{
+  padding-bottom: 10%;
+
+}
+.welcome-icon{
+  color:orange;
+  margin-right: 1%;
+}
+.welcome-icon-button{
+
+}
+.welcome-new-post-button{
+  display: flex;
+  align-items: center;
+}
+.welcome-message{
+  display: flex;
+  padding-left: 5%;
+  padding-top: 2%;
+  font-size: 16px;
+  font-family: sans-serif;
+}
+.welcome-message-sec{
+  display: flex;
+  padding-left: 5%;
+  font-size: 12px;
+  color: darkgrey;
+  font-family: sans-serif;
+}
 .Empty-Wall {
   width: 100%;
   height: 100%;
@@ -142,4 +172,16 @@ textarea {
   cursor: pointer;
   display: inline-flex;
   margin-right: 5px;
+}
+.navbar-collapse {
+  justify-content: center;
+}
+.navbar-brand{
+  margin-right: 0px;
+}
+.nav-links-container {
+  justify-content: flex-end;
+  left: 0;
+  position: absolute;
+  display: flex;
 }

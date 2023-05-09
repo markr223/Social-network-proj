@@ -52,7 +52,7 @@ export const handleUniqueDates = (data) => {
   return datesSliced.filter(onlyUnique);
 };
 
-export const serverURI = "https://79ae-5-102-216-35.ngrok-free.app";
+export const serverURI = "https://9bc3-31-154-77-130.ngrok-free.app";
 export const defaultConfig = {
     headers: {
       "ngrok-skip-browser-warning": "any value",
