@@ -7,10 +7,25 @@
   justify-content: center;
   flex-direction: column;
 }
+.ant-card .ant-card-actions {
+display: flow-root;
+}
 .post-container{
-  width: 40vh;
+  width: 60%;
   align-self: center;
   margin-bottom: 35px;
+}
+.post-send-comment-container{
+  display: flex;
+}
+.post-send-comment-input{
+  margin-right: 2%;
+}
+.post-send-comment-button{
+  display: list-item;
+}
+.post-send-comment-icon{
+  display: block !important;
 }
 .form-container{
   display: flex;
@@ -175,18 +190,17 @@ textarea {
 }
 .welcome-container{
   padding-bottom: 10%;
-
 }
 .welcome-icon{
   color:orange;
   margin-right: 1%;
 }
-.welcome-icon-button{
-
-}
 .welcome-new-post-button{
   display: flex;
   align-items: center;
+  position: absolute;
+  margin-top: 2%;
+  margin-left: 4%;
 }
 .welcome-message{
   display: flex;

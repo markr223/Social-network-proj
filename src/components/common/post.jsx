@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 import Like from "./like";
-import { Card, Space, Avatar } from 'antd';
-import {UserOutlined} from '@ant-design/icons';
+import { Card, Space, Avatar, Input, Button } from 'antd';
+import {SendOutlined, UserOutlined} from '@ant-design/icons';
 import * as consts from "../../consts/consts";
 
 class Post extends React.Component {
@@ -67,10 +67,16 @@ class Post extends React.Component {
       <Space direction="vertical" className="post-container">
         <Card 
           actions={[
+            <div className="post-send-comment-container">
+            <Input className="post-send-comment-input"/>
+            <Button className="post-send-comment-button" type="primary" shape="circle" icon={<SendOutlined className="post-send-comment-icon"/>} />
+            </div>,
             <Like
               onLike={() => this.handleLike(like)}
               liked={liked}
-              likesCount={likesCount}></Like>]}
+              likesCount={likesCount}>
+              </Like>
+            ]}
         > 
           <Meta
             className="post"
@@ -83,18 +89,6 @@ class Post extends React.Component {
           />
         </Card>
       </Space>
-
-      // <div className="post-container">
-      //   <div className="post m-2">
-      //     <span className="post-header">{header}</span>
-      //     <div className="post-desc">{description}</div>
-      //     <Like
-      //       onLike={() => this.handleLike(like)}
-      //       liked={liked}
-      //       likesCount={likesCount}
-      //     />
-      //   </div>
-      // </div>
     );
   }
 }
