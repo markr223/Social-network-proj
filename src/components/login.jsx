@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Form from "./common/form";
+import { Typewriter } from 'react-simple-typewriter'
 import * as Inputs from "../consts/consts";
 
 class Login extends React.Component {
@@ -54,20 +55,31 @@ class Login extends React.Component {
   render() {
     const { user, errors } = this.state;
     return (
-      <div className="formDisplay">
-        <h2 className="m-2">Login </h2>
-        <Form
-          buttonLabel="Login"
-          formInputs={Inputs.LOGIN_FORM_INPUTS}
-          onSubmit={this.handleLogin}
-          formValues={user}
-          onInputChange={this.handleInput}
-          data={user}
-          schema={this.schema}
-          errors={errors}
-          activateButton={this.validate()}
-        />
-      </div>
+        <div className="formDisplay">
+          <div className="form-mainTitle">
+            OPENU-SOCIAL
+          </div>
+          <div className="form-container">
+          <span className="form-welcome">
+            <Typewriter className="form-welcome" words={['Welcome to openu-social']}/> 
+          </span>
+          <span className="form-subTitle">
+            <Typewriter className="form-welcome" words={['Let`s log you in!']}/> 
+          </span>
+          <Form
+            buttonLabel="Login"
+            formInputs={Inputs.LOGIN_FORM_INPUTS}
+            onLoginClick={this.handleLogin}
+            formValues={user}
+            onInputChange={this.handleInput}
+            data={user}
+            schema={this.schema}
+            errors={errors}
+            isLogin={true}
+            activateButton={this.validate()}
+          />
+          </div>
+        </div>
     );
   }
 }

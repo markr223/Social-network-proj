@@ -153,7 +153,6 @@ class Feed extends React.Component {
                     onInputChange={this.handleInput}
                     onSubmit={() => this.handleAddingPost(post)}
                     errors={errors}
-                    inputTextArea={true}
                     activateButton={this.validate()}
                   />
                 </NewPostModal> 

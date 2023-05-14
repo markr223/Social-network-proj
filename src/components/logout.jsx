@@ -4,6 +4,8 @@ import auth from "../services/authService";
 class Logout extends React.Component {
   componentDidMount() {
     auth.logout();
+    window.sessionStorage.clear();
+    window.localStorage.clear();
     window.location = "/";
   }
 

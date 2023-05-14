@@ -1,19 +1,18 @@
 import React from "react";
+import { Input } from 'antd';
 
-export default function Input({
-  label,
-  type,
-  id,
-  value,
-  onChange,
-  error,
-  inputTextArea,
-}) {
+ const inputForm = (props) => {
+  const {  
+    label,
+    type,
+    id,
+    value,
+    onChange,
+    error
+  } = props;
   return (
     <div className="form-group">
-      <label htmlFor={id}>{label}</label>
-      {inputTextArea ? (
-        <textarea
+        <Input
           type={type}
           value={value}
           onChange={onChange}
@@ -21,17 +20,9 @@ export default function Input({
           id={id}
           placeholder={label}
         />
-      ) : (
-        <input
-          type={type}
-          value={value}
-          onChange={onChange}
-          className="form-control"
-          id={id}
-          placeholder={label}
-        />
-      )}
       {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
 }
+
+export default inputForm;

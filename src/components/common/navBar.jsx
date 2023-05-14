@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { LogoutOutlined } from "@ant-design/icons";
 
 export default function Navbar({ userAuth }) {
   return (
@@ -29,7 +30,7 @@ export default function Navbar({ userAuth }) {
                 </NavLink>
               )}
               <NavLink className="nav-item nav-link" to="/logout">
-                Log Out
+                <LogoutOutlined className="logout-icon"/>
               </NavLink>
             </div>
               <Link className="navbar-brand" to="/">
