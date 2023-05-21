@@ -23,9 +23,10 @@ class App extends React.Component {
     return (
       <div>
         <ToastContainer />
-        <Navbar userAuth={user} />
         <div className="content">
           {user && (
+            <>
+            <Navbar userAuth={user} />
             <Switch>
               <Route path="/postsDetails" component={PostsDetails} />
               <Route path="/logout" component={Logout} />
@@ -35,6 +36,7 @@ class App extends React.Component {
               />
               <Redirect to="/feed" />
             </Switch>
+            </>
           )}
           {!user && (
             <Switch>

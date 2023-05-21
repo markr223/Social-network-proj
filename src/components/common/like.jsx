@@ -3,7 +3,7 @@ import {LikeOutlined, LikeFilled} from "@ant-design/icons";
 
 export default function Like({ liked, onLike, likesCount }) {
   return (
-    <div>
+    <div className="like-container">
       { !liked ? 
         <LikeOutlined 
           onClick={onLike}
