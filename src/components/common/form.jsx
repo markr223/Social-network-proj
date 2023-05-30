@@ -15,9 +15,9 @@ const Form = (props) => {
     const addIconForLogin = (input) => {
       if(isLogin) {
         if(input.id === "email") {
-          return <MailOutlined className="login-icon"/>
+          return <MailOutlined/>
         } else if (input.id === "password") {
-          return <SmallDashOutlined className="login-icon"/>
+          return <SmallDashOutlined/>
         }
       }
     }
@@ -26,7 +26,6 @@ const Form = (props) => {
       <form onSubmit={(e) => e.preventDefault()}>
         {formInputs.map((input) => (
           <div className={isLogin ? 'login-form-container' : ''}>
-            {addIconForLogin(input)}
             <Input
               key={input.id}
               onChange={(e) => onInputChange(e, input.id)}
@@ -35,12 +34,13 @@ const Form = (props) => {
               type={input.type}
               error={errors[input.id]}
               inputTextArea={inputTextArea}
+              prefix={addIconForLogin(input)}
             />
           </div>
         ))}
       </form>
       {isLogin && <div className="formButton">
-        <Button type="primary" onClick={()=> onLoginClick()}>
+        <Button type="primary" className="formButton-login" onClick={()=> onLoginClick()}>
           Login  
         </Button>
       </div> }

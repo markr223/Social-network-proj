@@ -8,7 +8,8 @@ import { Input } from 'antd';
     id,
     value,
     onChange,
-    error
+    error,
+    prefix
   } = props;
   return (
     <div className="form-group">
@@ -19,6 +20,7 @@ import { Input } from 'antd';
           className="form-control"
           id={id}
           placeholder={label}
+          prefix={prefix}
         />
       {error && <div className="alert alert-danger">{error}</div>}
     </div>

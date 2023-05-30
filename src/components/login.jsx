@@ -3,8 +3,9 @@ import Joi from "joi-browser";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Form from "./common/form";
-import { Typewriter } from 'react-simple-typewriter'
 import * as Inputs from "../consts/consts";
+import { Button } from "antd";
+import SignUp from "./signUp";
 
 class Login extends React.Component {
   state = {
@@ -13,6 +14,7 @@ class Login extends React.Component {
       password: "",
     },
     errors: {},
+    isSignUpPage: false
   };
   schema = {
     email: Joi.string().email().required().label("Email"),
@@ -51,34 +53,42 @@ class Login extends React.Component {
     user[value] = e.currentTarget.value;
     this.setState({ user });
   };
+  handleSignUpLinkClick = () => {
+    this.setState({isSignUpPage: true})
+  };
 
   render() {
-    const { user, errors } = this.state;
+    const { user, errors, isSignUpPage } = this.state;
     return (
         <div className="formDisplay">
-          <div className="form-mainTitle">
-            OPENU-SOCIAL
-          </div>
           <div className="form-container">
-          <span className="form-welcome">
-            <Typewriter className="form-welcome" words={['Welcome to openu-social']}/> 
-          </span>
-          <span className="form-subTitle">
-            <Typewriter className="form-welcome" words={['Let`s log you in!']}/> 
-          </span>
-          <Form
-            buttonLabel="Login"
-            formInputs={Inputs.LOGIN_FORM_INPUTS}
-            onLoginClick={this.handleLogin}
-            formValues={user}
-            onInputChange={this.handleInput}
-            data={user}
-            schema={this.schema}
-            errors={errors}
-            isLogin={true}
-            activateButton={this.validate()}
-          />
-          </div>
+            { !isSignUpPage ? 
+          <> 
+            <span className="form-welcome">
+                Login
+            </span>
+            <Form
+              buttonLabel="Login"
+              formInputs={Inputs.LOGIN_FORM_INPUTS}
+              onLoginClick={this.handleLogin}
+              formValues={user}
+              onInputChange={this.handleInput}
+              data={user}
+              schema={this.schema}
+              errors={errors}
+              isLogin={true}
+              activateButton={this.validate()}
+            />
+            <span className="form-signup">
+              OR 
+              <Button type="link" className="form-signup-button" onClick={() => this.handleSignUpLinkClick()}>
+                sign-up
+              </Button>
+            </span>
+          </> :
+          <SignUp />
+          }
+          </div> 
         </div>
     );
   }
