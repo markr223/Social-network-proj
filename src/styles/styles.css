@@ -1,6 +1,6 @@
 :root,
 .display {
-  background-color: #353941;
+  background-color: #212c43;
 }
 @font-face {
   font-family: 'Poppins-bold';
@@ -18,7 +18,7 @@
   flex-direction: column;
 }
 .ant-card .ant-card-actions {
-display: flow-root;
+  display: flow-root;
 }
 .post-container{
   width: 60%;
@@ -62,6 +62,7 @@ display: flow-root;
   font-size: 42px;
 }
 .form-subTitle{
+  font-family: Poppins;
   font-size: 24px;
   margin-left: 5%;
 }
@@ -90,6 +91,7 @@ display: flow-root;
   justify-content: center;
 }
 .post-title-date{
+  font-family: Poppins;
   font-size: 12px;
   color: gainsboro;
 }
@@ -100,7 +102,7 @@ display: flow-root;
 }
 .ant-card-meta-title{
   font-size: 30px;
-  font-family: rubik, arial !important;
+  font-family: Poppins !important;
 }
 .form-control {
   font-family: Poppins;
@@ -125,6 +127,7 @@ display: flow-root;
   color: #5f85db;
 }
 .list-group-title{
+  font-family: Poppins;
   font-size: 24px;
 }
 .list-group {
@@ -146,7 +149,46 @@ display: flow-root;
   color: #33425b;
 }
 .feed {
-  background-color: #353941;
+  background-color: #212c43;
+}
+.feed-chart {
+  margin-top: 2%;
+  margin-bottom: 10%;
+}
+.feed-chart-title { 
+  font-family: Poppins;
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  margin-bottom: 5%;
+  margin-top: 5%;
+}
+.feed-chart-nothing {
+  font-family: Poppins;
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  margin-bottom: 5%;
+  margin-top: 5%;
+}
+.feed-post-details {
+  background-color: #212c43;
+  display: flex;
+  justify-content: center;
+}
+.feed-post-title {
+  font-family: Poppins;
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  margin-bottom: 5%;
+}
+.post-admin-delete {
+  position: absolute;
+    right: 5%;
 }
 .formDisplay {
   position: fixed;
@@ -185,7 +227,7 @@ label {
   column-gap: 10px;
   grid-row-gap: 10px;
   row-gap: 10px;
-  background-color: #353941;
+  background-color: #212c43;
 }
 .addPost {
   position: inherit;
@@ -196,7 +238,7 @@ label {
   text-align: -webkit-center;
   flex-direction: column;
   font-weight: bold;
-  background-color: #353941;
+  background-color: #212c43;
   color: #ffffff
 }
 textarea {

@@ -1,5 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
+import { connect } from "react-redux";
+import { loadUsers } from "../store/actions";
 import { Layout, Button } from 'antd';
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -168,7 +170,7 @@ class Feed extends React.Component {
                         description={post.description}
                       />
                     ))
-                  : <spna>BLA BLA</spna>}
+                  : <spna>No Posts yet? Start to write new one</spna>}
               </div>
             </div>
           </Content>
@@ -178,4 +180,15 @@ class Feed extends React.Component {
   }
 }
 
-export default Feed;
+const mapStateToProps = (state) => {
+  return {
+    users: state.allUsers.users
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadUsers: () => dispatch(loadUsers())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feed);

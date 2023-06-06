@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Card, Space, Avatar } from 'antd';
+import { Card, Space, Avatar, Button } from 'antd';
 import * as consts from "../../consts/consts";
 import CommentAndLikes from "./commentAndLikes";
 
@@ -40,7 +40,6 @@ class Post extends React.Component {
   }
 
   handleLike = async (like) => {
-    console.log("Like", like);
     const liked = this.state.liked;
     this.setState({ liked: !liked });
     try {
@@ -59,14 +58,14 @@ class Post extends React.Component {
     }
   };
   render() {
-    const { header, description } = this.props;
+    const { header, description, date, postToManage } = this.props;
     const { liked, likesCount, like } = this.state;
     const { Meta } = Card;
     return (
       <Space direction="vertical" className="post-container">
         <Card 
           actions={[
-            <CommentAndLikes like={like} liked={liked} likesCount={likesCount} handleLike={this.handleLike} />
+            !postToManage && <CommentAndLikes like={like} liked={liked} likesCount={likesCount} handleLike={this.handleLike} />
             ]}
         > 
           <Meta
@@ -74,7 +73,8 @@ class Post extends React.Component {
             avatar={<Avatar className="post-avatar">UN</Avatar>}
             title={<div>
               <span>{header}</span>
-              <div className="post-title-date">12/04/2023</div>
+              {postToManage && <Button type="primary" danger className="post-admin-delete">X</Button>}
+              <div className="post-title-date">{date}</div>
             </div>}
             description={description}
           />

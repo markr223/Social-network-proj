@@ -17,6 +17,26 @@ export const loadPostsFromServer = () => {
       .then((response) => {
         dispatch(getPosts(response.data));
       })
-      .catch((error) => alert("Error on loading posts"));
+      .catch((error) => alert(error + "Error on loading posts"));
+  };
+};
+
+const getUsers = (users) => {
+  return {
+    type: actionTypes.GET_USERS,
+    payload: {
+      users,
+    },
+  };
+}
+
+export const loadUsers = () => {
+  return (dispatch) => {
+    axios
+      .get(serverURI + "/api/User/GetAllUsers", defaultConfig)
+      .then((response) => {
+        dispatch(getUsers(response.data));
+      })
+      .catch((error) => alert(error + "Error on Loading users"));
   };
 };

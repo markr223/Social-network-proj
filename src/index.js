@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import App from "./components/App";
 import { store } from "./store/store";
 import { BrowserRouter } from "react-router-dom";
@@ -8,7 +8,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./styles/styles.css";
 import "font-awesome/css/font-awesome.css";
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container); 
+root.render(
   <BrowserRouter>
     <Provider store={store}>
       <App />

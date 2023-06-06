@@ -39,20 +39,21 @@ export const currentDate =
 // );
 
 export const handleUniqueDates = (data) => {
+  console.log(data);
   const dates = [];
   for (let date of data) dates.push(date.date);
   const datesSliced = [];
   for (let date of dates) {
     datesSliced.push(date.slice(0, 10));
   }
-  function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-  }
+  // function onlyUnique(value, index, self) {
+  //   return self.indexOf(value) === index;
+  // }
 
-  return datesSliced.filter(onlyUnique);
+  return datesSliced;
 };
 
-export const serverURI = "https://c626-31-154-77-130.ngrok-free.app";
+export const serverURI = "https://7025-147-235-200-55.ngrok-free.app";
 export const defaultConfig = {
     headers: {
       "ngrok-skip-browser-warning": "any value",

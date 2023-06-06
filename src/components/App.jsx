@@ -40,7 +40,6 @@ class App extends React.Component {
           )}
           {!user && (
             <Switch>
-              <Route path="/signUp" render={(props) => <SignUp {...props} />} />
               <Route path="/login" render={(props) => <Login {...props} />} />
               <Redirect to="/login" />
             </Switch>
