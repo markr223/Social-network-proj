@@ -21,6 +21,16 @@ export const loadPostsFromServer = () => {
   };
 };
 
+export const loadUserPostFromServer = (userId) => {
+  return (dispatch) => {
+    axios
+      .get(serverURI + "/api/User/GetAllUsers" + userId, defaultConfig)
+      .then((response) => {
+        dispatch(getPosts(response.data));
+      })
+      .catch((error) => alert(error + "Error on loading user posts"));
+  };
+};
 const getUsers = (users) => {
   return {
     type: actionTypes.GET_USERS,

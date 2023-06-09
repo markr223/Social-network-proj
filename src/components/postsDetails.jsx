@@ -1,34 +1,18 @@
 import React from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { loadPostsFromServer} from "../store/actions";
 import Chart from "./common/chart";
 import Post from "./common/post";
-import { serverURI, defaultConfig } from "../consts/consts";
-
 class PostsDetails extends React.Component {
-  state = {
-    posts: [],
-    currentPost: {},
-    currentPostLikes: [],
-  };
   componentDidMount() {
     this.props.getPostsFromStore();
   }
-
-  handleChosenPost = async (post) => {
-    const { data } = await axios.get(
-      serverURI + "/api/Like/GetLikes/" + post.postId,
-      defaultConfig
-    );
-    this.setState({ currentPost: post, currentPostLikes: data });
-  };
 
   createPostComponent = () => {
     const { posts } = this.props;
     return posts.map(post => {
       return(
-        <div className="feed-posts-container" onClick={() => {this.handleChosenPost(post)}}>
+        <div className="feed-posts-container">
           <Post 
             key={post.postId}
             currentUser={post.userId}
@@ -36,29 +20,19 @@ class PostsDetails extends React.Component {
             header={post.header}
             description={post.description}
             date={post.date}
-            onClick={() => {this.handleChosenPost(post)}}
             postToManage
         />
       </div>
       )})
   }
   render() {
-    const { currentPost, currentPostLikes } = this.state;
-    console.log("currentPostLikes", currentPostLikes);
+    const { posts } = this.props;
     return (
       <div className="row feed-post-details">
         <div className="feed-chart col-8">
-          {currentPostLikes.length ? 
-          <>
-          <div className="feed-chart-title"> Post like Data </div>
+          <div className="feed-chart-title"> Post count per date </div>
           <Chart
-            currentPost={currentPost}
-            postLikes={currentPostLikes}
-            postId={currentPost.postId}
-          /> 
-          </>: 
-            <div className="feed-chart-nothing"> Nothing to show </div>
-          }
+            posts={posts} />
         </div>
         <div className="feed-post-title"> Posts To Managed </div>
           {this.createPostComponent()}

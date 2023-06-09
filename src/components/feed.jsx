@@ -1,7 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import { connect } from "react-redux";
-import { loadUsers } from "../store/actions";
+import { loadUsers, loadPostsFromServer, loadUserPostFromServer } from "../store/actions";
 import { Layout, Button } from 'antd';
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -30,9 +30,9 @@ class Feed extends React.Component {
       users: [],
       chosentUser: {},
       errors: {},
-      posts: [],
       isModalOpen: false
     };
+    props.getPostsFromStore();
   }
   getAllUsers = async () => {
     try {
@@ -45,17 +45,12 @@ class Feed extends React.Component {
   };
 
   getPostsByUser = async () => {
-    try {
-      const { data } = await axios.get(
-        Inputs.serverURI + "/api/Post/GetUserPosts/" + this.state.post.userId,
-        Inputs.defaultConfig
-      );
-      this.setState({ posts: data });
-    } catch (ex) {}
+    
   };
 
   componentDidMount() {
-    this.getPostsByUser();
+    // this.getPostsByUser();
+    this.props.getPostsFromStore();
     this.getAllUsers();
   }
 
@@ -91,16 +86,8 @@ class Feed extends React.Component {
   };
 
   handleChosenUser = async (user) => {
-    try {
-      const { data } = await axios.get(
-        Inputs.serverURI + "/api/Post/GetUserPosts/" + user.id , Inputs.defaultConfig
-      );
-      data.length === 0
-        ? this.setState({ emptyWall: true })
-        : this.setState({ emptyWall: false });
-      this.setState({ posts: data, chosentUser: user });
-    } catch (ex) {}
-    window.scrollTo(0, 0);
+    const {getUserPosts} = this.props;
+    getUserPosts(user.id);
   };
 
   showModal = () => {
@@ -112,8 +99,8 @@ class Feed extends React.Component {
   };
 
   render() {
-    const { post, errors, chosentUser, users, posts, emptyWall, isModalOpen } = this.state;
-    const { loggedUser } = this.props;
+    const { post, errors, chosentUser, users, emptyWall, isModalOpen } = this.state;
+    const { loggedUser, posts} = this.props;
     const { Content, Sider } = Layout;
     return (
       <>
@@ -182,12 +169,15 @@ class Feed extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.allUsers.users
+    users: state.allUsers.users,
+    posts: state.postsFromStore.posts
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadUsers: () => dispatch(loadUsers())
+    loadUsers: () => dispatch(loadUsers()),
+    getPostsFromStore: () => dispatch(loadPostsFromServer()),
+    getUserPosts: (userId) => dispatch(loadUserPostFromServer(userId))
   };
 };
 

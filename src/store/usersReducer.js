@@ -5,7 +5,6 @@ let initialState = {
 };
 
 const usersReducer = (state = initialState, action) => {
-    console.log(action);
   switch (action.type) {
     case actionTypes.GET_USERS:
       return {

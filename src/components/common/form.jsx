@@ -11,7 +11,6 @@ const Form = (props) => {
     onLoginClick,
     isLogin,
     inputTextArea} = props;
-    console.log(formInputs);
     const addIconForLogin = (input) => {
       if(isLogin) {
         if(input.id === "email") {

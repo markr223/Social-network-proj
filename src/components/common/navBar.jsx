@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { LogoutOutlined } from "@ant-design/icons";
+import { LogoutOutlined, SettingOutlined } from "@ant-design/icons";
 
 export default function Navbar({ userAuth }) {
   return (
@@ -20,18 +20,20 @@ export default function Navbar({ userAuth }) {
           {userAuth && (
             <>
             <div className="nav-links-container">
+              <NavLink className="nav-item nav-link" to="/logout">
+                <LogoutOutlined className="logout-icon"/>
+                LogOut
+              </NavLink>
               <NavLink className="nav-item nav-link" to="/">
                 {" "}
                 Hi, {userAuth.userName}
               </NavLink>
               {userAuth.Role === "Admin" && (
                 <NavLink className="nav-item nav-link" to="/postsDetails">
-                  Posts Details
+                  <SettingOutlined className="logout-icon"/>
+                  Admin Panel
                 </NavLink>
               )}
-              <NavLink className="nav-item nav-link" to="/logout">
-                <LogoutOutlined className="logout-icon"/>
-              </NavLink>
             </div>
               <Link className="navbar-brand" to="/">
                 OpenU-Social
