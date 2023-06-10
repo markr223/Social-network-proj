@@ -167,6 +167,7 @@ class Feed extends React.Component {
               id={"id"}
               name={"userName"}
               manageUsers={loggedUser.Role === "Admin"}
+              getAllUsers={this.getAllUsers}
             />
           </Sider>
           <Content>

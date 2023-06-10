@@ -13,7 +13,7 @@ class PostsDetails extends React.Component {
   }
 
   createPostComponent = () => {
-    const { posts } = this.props;
+    const { posts, getPostsFromStore } = this.props;
     return [...posts].reverse().map(post => {
       return(
         <div className="feed-posts-container">
@@ -26,6 +26,7 @@ class PostsDetails extends React.Component {
             date={post.date}
             userId={post.userId}
             userName={post.userName}
+            getPosts={getPostsFromStore}
             postToManage
         />
       </div>

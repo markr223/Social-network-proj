@@ -5,56 +5,67 @@ import { Collapse, Card, Space, Avatar, Button, Divider } from 'antd';
 import * as consts from "../../consts/consts";
 import CommentAndLikes from "./commentAndLikes";
 import { UserOutlined } from "@ant-design/icons";
+import { useState, useEffect } from "react";
 
-class Post extends React.Component {
-  state = {};
-  constructor(props) {
-    super(props);
-    this.state = {
-      like: {
-        date: consts.currentDate,
-        userId: this.props.currentUser.id,
-        postId: this.props.postId,
-      },
-      liked: false,
-      likesCount: 0,
-      comments: []
-    };
-  }
+export default function Post(props) {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     like: {
+  //       date: consts.currentDate,
+  //       userId: this.props.currentUser.id,
+  //       postId: this.props.postId,
+  //     },
+  //     liked: false,
+  //     likesCount: 0,
+  //     comments: []
+  //   };
+  // }
+  const [likeData] = useState({
+    date: consts.currentDate,
+    userId: props.currentUser.id,
+    postId: props.postId
+  });
+  const [liked, setLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
+  const [comments, setComments] = useState([]);
 
-  getcomments = async () => {
-    const {postId} = this.props
+  const getcomments = async () => {
+    const {postId} = props
     try {
       const { data } = await axios.get(consts.serverURI + "/api/Comment/GetPostComments/" + postId, consts.defaultConfig)
-      this.setState({comments: data})
+      setComments(data);
+      // this.setState({comments: data})
     } catch (ex) {
       toast.error("failed get comments");
     }
     
   }
-  getLikes = async () => {
-    const like = this.state.like;
+  const getLikes = async () => {
+    const {currentUser} = props;
     try {
       const { data } = await axios.get(
-        consts.serverURI + "/api/Like/GetLikes/" + like.postId,
+        consts.serverURI + "/api/Like/GetLikes/" + likeData.postId,
         consts.defaultConfig
       );
       for (let postLikes of data)
-        if (postLikes.userId === this.props.currentUser.id)
-          this.setState({ liked: true });
-      this.setState({ likesCount: data.length });
+        if (postLikes.userId === currentUser.id)
+          setLiked(true);
+          // this.setState({ liked: true });
+      setLikesCount(data.length);
+      // this.setState({ likesCount: data.length });
     } catch (ex) {
       toast.error("failed to get the likes");
     }
   };
 
-  componentDidMount() {
-    this.getLikes();
-    this.getcomments()
-  }
+  useEffect(() => {
+    getLikes();
+    getcomments();
+  }, []);
 
-  handleSendComment = async (description) => {
-    const {postId, currentUser} = this.props;
+  const handleSendComment = async (description) => {
+    const {postId, currentUser} = props;
     if(!description){
       toast.error("Please add a description");
     }
@@ -63,16 +74,15 @@ class Post extends React.Component {
       try {
         await axios.post( consts.serverURI + "/api/Comment/AddComment", comment, consts.defaultConfig);
         toast.success('Comment sent!')
-        this.getcomments();
+        getcomments();
       } catch (ex) {
         alert("Error on add comment");
       }
     }
   }
 
-  handleLike = async (like) => {
-    const liked = this.state.liked;
-    this.setState({ liked: !liked });
+  const handleLike = async (like) => {
+    setLiked(!liked)
     try {
       await axios.post( consts.serverURI + "/api/Like", like, consts.defaultConfig);
       try {
@@ -80,18 +90,43 @@ class Post extends React.Component {
           consts.serverURI + "/api/Like/GetLikes/" + like.postId,
           consts.defaultConfig
         );
-        this.setState({ likesCount: data.length });
+        setLikesCount(data.length);
+        // this.setState({ likesCount: data.length });
       } catch (ex) {
-        toast.error(ex + 'Error with likes');
+        toast.error(ex + ' Error with likes');
       }
     } catch (ex) {
-      toast.error(ex + 'Error with likes')
+      toast.error(ex + ' Error with likes')
     }
   };
 
-  displayPost = () => {
-    const { postToManage } = this.props;
-    const { comments } = this.state;
+  const handleRemoveComment = async (commentId) => {
+    try {
+      await axios.post(
+        consts.serverURI + "/api/Comment/RemoveComment/" + commentId,
+        consts.defaultConfig
+      );
+      getcomments();
+    }catch(ex) {
+      toast.error(ex + ' Error with remove comment')
+    }
+  };
+
+  const handleRemovePost = async (postId) => {
+    const {getPosts} = props;
+    try {
+      await axios.post(
+        consts.serverURI + "/api/Post/RemovePost/" + postId,
+        consts.defaultConfig
+      );
+      getPosts();
+    }catch(ex) {
+      toast.error(ex + ' Error with remove post')
+    }
+  }
+
+  const displayComments = () => {
+    const { postToManage } = props;
     return comments && comments.map(co => {
         return (
           <>
@@ -102,7 +137,7 @@ class Post extends React.Component {
               <span className="commant-post-date">{co.date.slice(0,10)}</span>
               </div>
               <span className="commant-post-description">{co.description}</span>
-              {postToManage && <Button type="primary" danger className="comment-admin-delete">X</Button>}
+              {postToManage && <Button type="primary" danger className="comment-admin-delete" onClick={() => {handleRemoveComment(co.commentId)}}>X</Button>}
             </div>
               <Divider className="commant-post-divider"/>
             </>
@@ -110,20 +145,18 @@ class Post extends React.Component {
       })
   }
 
-  render() {
-    const { header, description, date, postToManage, userId, userName, handleShowUserFeed } = this.props;
-    const { liked, likesCount, like, comments } = this.state;
+    const { header, description, date, postToManage, userId, userName, handleShowUserFeed, postId } = props;
     const { Meta } = Card;
     return (
       <Space direction="vertical" className="post-container">
         <Card bodyStyle={{width: "100%"}}
           actions={[
             !postToManage && <CommentAndLikes 
-              handleSendComment={this.handleSendComment} 
-              like={like} 
+              handleSendComment={handleSendComment} 
+              like={likeData} 
               liked={liked} 
               likesCount={likesCount} 
-              handleLike={this.handleLike} 
+              handleLike={handleLike} 
             />,
             ]}
         > 
@@ -139,7 +172,7 @@ class Post extends React.Component {
               </Avatar>}
             title={<div>
               <span>{header}</span>
-              {postToManage && <Button type="primary" danger className="post-admin-delete">X</Button>}
+              {postToManage && <Button type="primary" danger className="post-admin-delete" onClick={() => handleRemovePost(postId)}>X</Button>}
               <div className="post-title-date">{date.slice(0,10)}</div>
             </div>}
             description={description}
@@ -147,14 +180,12 @@ class Post extends React.Component {
         </Card>
         {comments.length ? <Collapse className="accordion-post-container" accordion> 
           <Collapse.Panel header={`${comments.length} Commants`}>
-          {this.displayPost()}
+          {displayComments()}
           </Collapse.Panel>
         </Collapse> :
         <></>
         }
       </Space>
     );
-  }
 }
 
-export default Post;
