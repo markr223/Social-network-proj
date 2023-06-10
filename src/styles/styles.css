@@ -61,6 +61,13 @@ body{
   margin: 0 2% 0 2%;
   width: 70%;
 }
+.post-user-name{
+  display: flex;
+  margin-inline-end: auto;
+  font-family: 'Poppins';
+  color: #5baaec;
+  font-size: 16px;
+}
 .post-send-comment-button{
   display: list-item;
 }
@@ -115,6 +122,7 @@ body{
   background-color: #5baaec;
   display: flex;
   place-self: flex-start;
+  cursor: pointer;
 }
 .post-title-date{
   font-size: 12px;
@@ -192,6 +200,11 @@ body{
 .list-group-item-name{
   color: #ffffff;
 }
+.list-group-delete-user{
+  margin-top: 3px;
+  margin-left: 7%;
+  width: 13vh;
+}
 .feed {
   background-color: #212c43;
 }
@@ -231,6 +244,10 @@ body{
 .post-admin-delete {
   position: absolute;
   right: 5%;
+}
+.comment-admin-delete {
+  display: flex;
+  align-self: self-end;
 }
 .formDisplay {
   position: fixed;
@@ -420,4 +437,7 @@ textarea {
   color: white;
   font-family: Poppins;
   font-size: 16px;
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-expand-icon {
+  padding-top: 6px;
 }

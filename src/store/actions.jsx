@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./actionType";
 import { serverURI, defaultConfig } from "../consts/consts";
+import { toast } from "react-toastify";
 
 const getPosts = (posts) => {
   return {
@@ -17,7 +18,7 @@ export const loadPostsFromServer = () => {
       .then((response) => {
         dispatch(getPosts(response.data));
       })
-      .catch((error) => alert(error + "Error on loading posts"));
+      .catch((error) => toast.error(error + "Error on loading posts"))
   };
 };
 
@@ -28,7 +29,7 @@ export const loadUserPostFromServer = (userId) => {
       .then((response) => {
         dispatch(getPosts(response.data));
       })
-      .catch((error) => alert(error + "Error on loading user posts"));
+      .catch((error) => toast.error(error + "Error on loading user posts"));
   };
 };
 const getUsers = (users) => {
@@ -47,6 +48,6 @@ export const loadUsers = () => {
       .then((response) => {
         dispatch(getUsers(response.data));
       })
-      .catch((error) => alert(error + "Error on Loading users"));
+      .catch((error) => toast.error(error + "Error on Loading users"));
   };
 };

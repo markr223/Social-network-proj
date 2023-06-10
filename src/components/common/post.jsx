@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { Collapse, Card, Space, Avatar, Button, Divider } from 'antd';
 import * as consts from "../../consts/consts";
 import CommentAndLikes from "./commentAndLikes";
@@ -17,9 +18,20 @@ class Post extends React.Component {
       },
       liked: false,
       likesCount: 0,
+      comments: []
     };
   }
 
+  getcomments = async () => {
+    const {postId} = this.props
+    try {
+      const { data } = await axios.get(consts.serverURI + "/api/Comment/GetPostComments/" + postId, consts.defaultConfig)
+      this.setState({comments: data})
+    } catch (ex) {
+      toast.error("failed get comments");
+    }
+    
+  }
   getLikes = async () => {
     const like = this.state.like;
     try {
@@ -32,15 +44,31 @@ class Post extends React.Component {
           this.setState({ liked: true });
       this.setState({ likesCount: data.length });
     } catch (ex) {
-      alert("Error ;(");
+      toast.error("failed to get the likes");
     }
   };
 
   componentDidMount() {
     this.getLikes();
+    this.getcomments()
   }
 
-
+  handleSendComment = async (description) => {
+    const {postId, currentUser} = this.props;
+    if(!description){
+      toast.error("Please add a description");
+    }
+    else {
+      const comment = {date: new Date(), description, postId: postId.toString(),  userId: currentUser.id, userName: currentUser.userName}
+      try {
+        await axios.post( consts.serverURI + "/api/Comment/AddComment", comment, consts.defaultConfig);
+        toast.success('Comment sent!')
+        this.getcomments();
+      } catch (ex) {
+        alert("Error on add comment");
+      }
+    }
+  }
 
   handleLike = async (like) => {
     const liked = this.state.liked;
@@ -54,52 +82,59 @@ class Post extends React.Component {
         );
         this.setState({ likesCount: data.length });
       } catch (ex) {
-        alert("Error ;(");
+        toast.error(ex + 'Error with likes');
       }
     } catch (ex) {
-      alert("Error ;(");
+      toast.error(ex + 'Error with likes')
     }
   };
-  onChange = () => {
-    console.log('Click');
+
+  displayPost = () => {
+    const { postToManage } = this.props;
+    const { comments } = this.state;
+    return comments && comments.map(co => {
+        return (
+          <>
+            <div className="commant-post">
+              <div>
+              <Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${co.userId}`} className="commant-post-avatar" />
+              <div className="commant-post-user">{co.userName}</div>
+              <span className="commant-post-date">{co.date.slice(0,10)}</span>
+              </div>
+              <span className="commant-post-description">{co.description}</span>
+              {postToManage && <Button type="primary" danger className="comment-admin-delete">X</Button>}
+            </div>
+              <Divider className="commant-post-divider"/>
+            </>
+        )
+      })
   }
+
   render() {
-    const { header, description, date, postToManage } = this.props;
-    const { liked, likesCount, like } = this.state;
+    const { header, description, date, postToManage, userId, userName, handleShowUserFeed } = this.props;
+    const { liked, likesCount, like, comments } = this.state;
     const { Meta } = Card;
-    // TODO: add user id + user name
-
-    const items = [
-      {
-        key: '1',
-        label: 'This is panel header 1',
-        children: <p>asdfgasdfg</p>,
-      },
-      {
-        key: '2',
-        label: 'This is panel header 2',
-        children: <p>23sdfasd423</p>,
-      },
-      {
-        key: '3',
-        label: 'This is panel header 3',
-        children: <p>234234234</p>,
-      },
-    ];
-
-
     return (
       <Space direction="vertical" className="post-container">
         <Card bodyStyle={{width: "100%"}}
           actions={[
-            !postToManage && <CommentAndLikes like={like} liked={liked} likesCount={likesCount} handleLike={this.handleLike} />,
+            !postToManage && <CommentAndLikes 
+              handleSendComment={this.handleSendComment} 
+              like={like} 
+              liked={liked} 
+              likesCount={likesCount} 
+              handleLike={this.handleLike} 
+            />,
             ]}
         > 
+          <Button className="post-user-name" type="link" onClick={() => handleShowUserFeed(userId, userName)}>{userName}</Button>
           <Meta
             className="post"
             avatar={<Avatar 
-              // src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${this.state.userId}`} NEED TO PUT USER-ID
-              className="post-avatar">
+              src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${userId}`}
+              className="post-avatar"
+              onClick={() => handleShowUserFeed(userId, userName)}
+              >
                 <UserOutlined />
               </Avatar>}
             title={<div>
@@ -110,27 +145,13 @@ class Post extends React.Component {
             description={description}
           />
         </Card>
-        <Collapse className="accordion-post-container" accordion items={items}> 
-          <Collapse.Panel header="Commants">
-          <div className="commant-post">
-            <div>
-            <Avatar className="commant-post-avatar"><UserOutlined /></Avatar>
-            <div className="commant-post-user">User Name</div>
-            <span className="commant-post-date">{date.slice(0,10)}</span>
-            </div>
-            <span className="commant-post-description">Commant on your post! asdf asdfasdfasdfasdfasdfasdf asdf asdfas dfasdf asdf asdf asdf asdf asdfasdfasdfasdfasdf asdf asdf asdfasdfasdfasdfasdfasdfasdfsadfsadfsadfsadfddddd</span>
-          </div>
-          <Divider className="commant-post-divider"/>
-          <div className="commant-post">
-            <div>
-            <Avatar className="commant-post-avatar"><UserOutlined /></Avatar>
-            <div className="commant-post-user">User Name</div>
-            <span className="commant-post-date">{date.slice(0,10)}</span>
-            </div>
-            <span className="commant-post-description">Commant on your post!</span>
-          </div>
+        {comments.length ? <Collapse className="accordion-post-container" accordion> 
+          <Collapse.Panel header={`${comments.length} Commants`}>
+          {this.displayPost()}
           </Collapse.Panel>
-        </Collapse> 
+        </Collapse> :
+        <></>
+        }
       </Space>
     );
   }

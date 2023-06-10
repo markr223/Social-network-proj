@@ -38,7 +38,7 @@ export const currentDate =
 //   <h5 className="Empty-Wall">Wall Is Empty...</h5>
 // );
 
-export const serverURI = "https://9d02-31-154-77-130.ngrok-free.app";
+export const serverURI = "https://d6db-5-102-196-61.ngrok-free.app";
 export const defaultConfig = {
     headers: {
       "ngrok-skip-browser-warning": "any value",

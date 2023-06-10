@@ -14,7 +14,7 @@ class PostsDetails extends React.Component {
 
   createPostComponent = () => {
     const { posts } = this.props;
-    return posts.map(post => {
+    return [...posts].reverse().map(post => {
       return(
         <div className="feed-posts-container">
           <Post 
@@ -24,6 +24,8 @@ class PostsDetails extends React.Component {
             header={post.header}
             description={post.description}
             date={post.date}
+            userId={post.userId}
+            userName={post.userName}
             postToManage
         />
       </div>

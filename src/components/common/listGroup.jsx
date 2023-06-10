@@ -7,12 +7,15 @@ export default function ListGroup({
   id,
   currentItem,
   onChosenItem,
+  manageUsers,
   label,
 }) {
+  console.log(manageUsers);
   return (
     <div className="list-group-container">
       <span className="list-group-title">{label}</span>
         {dataList.length ? dataList.map((item) => (
+          <>
           <Button type="primary" ghost className={`${item.id === currentItem.id && "list-group-item-selected"} list-group`} onClick={() => onChosenItem(item)}>
             <Avatar
                 key={id} 
@@ -22,6 +25,8 @@ export default function ListGroup({
             />
             <span className="list-group-item-name">{item.userName}</span>
           </Button>
+          {manageUsers && <Button className="list-group-delete-user" type="primary" danger>x</Button>}
+          </>
         )) : ""}
     </div>
   );

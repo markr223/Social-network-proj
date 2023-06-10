@@ -2,6 +2,7 @@ import * as actionTypes from "./actionType";
 
 let initialState = {
   posts: [],
+  comments: []
 };
 
 const postsReducer = (state = initialState, action) => {
@@ -15,6 +16,14 @@ const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: action.payload.posts
+      }
+    case actionTypes.GET_POST_COMMENT:
+      const tempComment = [...this.state.comments];
+      tempComment.push(action.payload.comments);
+      return{
+        ...state,
+        comments: tempComment,
+        postId: action.payload.postId
       }
     default:
       return state;

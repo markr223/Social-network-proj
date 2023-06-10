@@ -26,6 +26,7 @@ class Feed extends React.Component {
         header: "",
         description: "",
         userId: this.props.loggedUser.id,
+        date: ""
       },
       users: [],
       chosentUser: {},
@@ -33,6 +34,7 @@ class Feed extends React.Component {
       isModalOpen: false
     };
     props.getPostsFromStore();
+    console.log(this.props.loggedUser);
   }
   getAllUsers = async () => {
     try {
@@ -61,6 +63,7 @@ class Feed extends React.Component {
   handleInput = (e, value) => {
     let post = { ...this.state.post };
     post[value] = e.currentTarget.value;
+    post['date'] = new Date();
     this.setState({ post });
   };
 
@@ -120,11 +123,17 @@ class Feed extends React.Component {
       }
   }
 
-  handleChosenUser = async (user) => {
+  handleChosenUser = (user) => {
     const {getUserPosts} = this.props;
     this.setState({chosentUser: user});
     getUserPosts(user.id);
   };
+
+  handleChosenUserId = (userId, userName) => {
+    const {getUserPosts} = this.props;
+    this.setState({chosentUser: {id: userId, userName}});
+    getUserPosts(userId);
+  } 
 
   showModal = () => {
     this.setState({isModalOpen: true});
@@ -136,7 +145,7 @@ class Feed extends React.Component {
 
   render() {
     const { post, errors, chosentUser, users, isModalOpen } = this.state;
-    const { loggedUser, posts} = this.props;
+    const { loggedUser, posts } = this.props;
     const { Content, Sider } = Layout;
     return (
       <>
@@ -157,6 +166,7 @@ class Feed extends React.Component {
               label={"Users"}
               id={"id"}
               name={"userName"}
+              manageUsers={loggedUser.Role === "Admin"}
             />
           </Sider>
           <Content>
@@ -206,6 +216,9 @@ class Feed extends React.Component {
                         date={post.date}
                         header={post.header}
                         description={post.description}
+                        userId={post.userId}
+                        userName={post.userName}
+                        handleShowUserFeed={this.handleChosenUserId}
                       />
                     ))
                   : 
@@ -228,14 +241,14 @@ class Feed extends React.Component {
 const mapStateToProps = (state) => {
   return {
     users: state.allUsers.users,
-    posts: state.postsFromStore.posts
+    posts: state.postsFromStore.posts,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     loadUsers: () => dispatch(loadUsers()),
     getPostsFromStore: () => dispatch(loadPostsFromServer()),
-    getUserPosts: (userId) => dispatch(loadUserPostFromServer(userId))
+    getUserPosts: (userId) => dispatch(loadUserPostFromServer(userId)),
   };
 };
 
