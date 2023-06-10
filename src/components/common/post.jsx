@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Card, Space, Avatar, Button } from 'antd';
+import { Collapse, Card, Space, Avatar, Button, Divider } from 'antd';
 import * as consts from "../../consts/consts";
 import CommentAndLikes from "./commentAndLikes";
 import { UserOutlined } from "@ant-design/icons";
@@ -40,6 +40,8 @@ class Post extends React.Component {
     this.getLikes();
   }
 
+
+
   handleLike = async (like) => {
     const liked = this.state.liked;
     this.setState({ liked: !liked });
@@ -58,16 +60,39 @@ class Post extends React.Component {
       alert("Error ;(");
     }
   };
+  onChange = () => {
+    console.log('Click');
+  }
   render() {
     const { header, description, date, postToManage } = this.props;
     const { liked, likesCount, like } = this.state;
     const { Meta } = Card;
     // TODO: add user id + user name
+
+    const items = [
+      {
+        key: '1',
+        label: 'This is panel header 1',
+        children: <p>asdfgasdfg</p>,
+      },
+      {
+        key: '2',
+        label: 'This is panel header 2',
+        children: <p>23sdfasd423</p>,
+      },
+      {
+        key: '3',
+        label: 'This is panel header 3',
+        children: <p>234234234</p>,
+      },
+    ];
+
+
     return (
       <Space direction="vertical" className="post-container">
-        <Card 
+        <Card bodyStyle={{width: "100%"}}
           actions={[
-            !postToManage && <CommentAndLikes like={like} liked={liked} likesCount={likesCount} handleLike={this.handleLike} />
+            !postToManage && <CommentAndLikes like={like} liked={liked} likesCount={likesCount} handleLike={this.handleLike} />,
             ]}
         > 
           <Meta
@@ -85,6 +110,27 @@ class Post extends React.Component {
             description={description}
           />
         </Card>
+        <Collapse className="accordion-post-container" accordion items={items}> 
+          <Collapse.Panel header="Commants">
+          <div className="commant-post">
+            <div>
+            <Avatar className="commant-post-avatar"><UserOutlined /></Avatar>
+            <div className="commant-post-user">User Name</div>
+            <span className="commant-post-date">{date.slice(0,10)}</span>
+            </div>
+            <span className="commant-post-description">Commant on your post! asdf asdfasdfasdfasdfasdfasdf asdf asdfas dfasdf asdf asdf asdf asdf asdfasdfasdfasdfasdf asdf asdf asdfasdfasdfasdfasdfasdfasdfsadfsadfsadfsadfddddd</span>
+          </div>
+          <Divider className="commant-post-divider"/>
+          <div className="commant-post">
+            <div>
+            <Avatar className="commant-post-avatar"><UserOutlined /></Avatar>
+            <div className="commant-post-user">User Name</div>
+            <span className="commant-post-date">{date.slice(0,10)}</span>
+            </div>
+            <span className="commant-post-description">Commant on your post!</span>
+          </div>
+          </Collapse.Panel>
+        </Collapse> 
       </Space>
     );
   }

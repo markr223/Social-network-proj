@@ -28,6 +28,31 @@ body{
   width: 60%;
   align-self: center;
   margin-bottom: 35px;
+  gap: 0px !important;
+}
+.accordion-post-container{
+  margin-top: -11px;
+  background-color: white;
+}
+.commant-post{
+  display: flex;
+  flex-direction: column;
+}
+.commant-post-date{
+  font-size: 10px;
+  color: #212c43;
+}
+.commant-post-avatar{
+  background-color: #5c6063;
+  display: flex;
+  place-self: flex-start;
+}
+.commant-post-description{
+  display: contents;
+  margin-left: 5%;
+}
+.commant-post-divider{
+  margin: 1% 0;
 }
 .post-send-comment-container{
   display: flex;
@@ -384,4 +409,15 @@ textarea {
 }
 .welcome-go-your-feed-icon {
   display: inline-flex !important;
+}
+.feed-statistic-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  margin-left: 5%;
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-statistic .ant-statistic-title{
+  color: white;
+  font-family: Poppins;
+  font-size: 16px;
 }

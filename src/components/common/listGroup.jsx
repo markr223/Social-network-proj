@@ -14,8 +14,6 @@ export default function ListGroup({
       <span className="list-group-title">{label}</span>
         {dataList.length ? dataList.map((item) => (
           <Button type="primary" ghost className={`${item.id === currentItem.id && "list-group-item-selected"} list-group`} onClick={() => onChosenItem(item)}>
-            {console.log('currentItem.id', currentItem.id)}
-            {console.log('item:',item, '   ', item.id !== currentItem.id ? "list-group-item-unselected" : "list-group-item-selected")}
             <Avatar
                 key={id} 
                 src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${item.id}`}
