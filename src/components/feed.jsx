@@ -2,7 +2,7 @@ import React from "react";
 import Joi from "joi-browser";
 import { connect } from "react-redux";
 import { loadUsers, loadPostsFromServer, loadUserPostFromServer } from "../store/actions";
-import { Layout, Button } from 'antd';
+import { Layout, Button, Empty } from 'antd';
 import axios from "axios";
 import { toast } from "react-toastify";
 import Form from "./common/form";
@@ -10,7 +10,7 @@ import Post from "./common/post";
 import ListGroup from "./common/listGroup";
 import * as Inputs from "../consts/consts";
 import NewPostModal from "./common/newPostModal";
-import { FormOutlined, SmileFilled } from "@ant-design/icons";
+import { FormOutlined, HomeOutlined, SmileFilled, UserOutlined } from "@ant-design/icons";
 
 class Feed extends React.Component {
   state = {};
@@ -44,13 +44,7 @@ class Feed extends React.Component {
     } catch (ex) {}
   };
 
-  getPostsByUser = async () => {
-    
-  };
-
   componentDidMount() {
-    // this.getPostsByUser();
-    this.props.getPostsFromStore();
     this.getAllUsers();
   }
 
@@ -85,8 +79,50 @@ class Feed extends React.Component {
     }
   };
 
+  manageFeedText = () => {
+    const { chosentUser } = this.state;
+    const { loggedUser } = this.props;
+    if (Object.keys(chosentUser).length) {
+      if(chosentUser.id === loggedUser.id){
+        return (
+          <div className="feed-user-container">
+              <UserOutlined className="feed-user-icon"/>
+              <div>Its Your wall</div>
+          </div>
+        )
+      } 
+        return (
+          <div className="feed-user-container">
+              <UserOutlined className="feed-user-icon"/>
+              <div>Its {chosentUser.userName} wall</div>
+          </div>
+        );
+      }
+  }
+
+  manageEmptyWallText = () => {
+    const { chosentUser } = this.state;
+    const { loggedUser } = this.props;
+    if (Object.keys(chosentUser).length) {
+      if(chosentUser.id === loggedUser.id){
+        return (
+          <>
+            <div className="empty-wall-text" >No post yet? Post one</div>
+            <Button type="primary" icon={<FormOutlined className="welcome-icon-button"/>} onClick={() => this.showModal()}>
+              Write new post
+            </Button>
+          </>
+        )
+      } 
+        return (
+          <div className="empty-wall-text">No post yet </div>
+        );
+      }
+  }
+
   handleChosenUser = async (user) => {
     const {getUserPosts} = this.props;
+    this.setState({chosentUser: user});
     getUserPosts(user.id);
   };
 
@@ -99,7 +135,7 @@ class Feed extends React.Component {
   };
 
   render() {
-    const { post, errors, chosentUser, users, emptyWall, isModalOpen } = this.state;
+    const { post, errors, chosentUser, users, isModalOpen } = this.state;
     const { loggedUser, posts} = this.props;
     const { Content, Sider } = Layout;
     return (
@@ -118,7 +154,7 @@ class Feed extends React.Component {
               dataList={users}
               currentItem={chosentUser}
               onChosenItem={this.handleChosenUser}
-              label={"Users :"}
+              label={"Users"}
               id={"id"}
               name={"userName"}
             />
@@ -128,8 +164,19 @@ class Feed extends React.Component {
               <div>
                 <div className="welcome-container">
                   <div>
-                    <span className="welcome-message">{<SmileFilled className="welcome-icon"/>} Hello, {loggedUser.userName} </span>
-                    <span className="welcome-message-sec">this is your updated feed</span>
+                    <span className="welcome-message">{<SmileFilled className="welcome-icon"/>} 
+                      Hello, {loggedUser.userName} 
+                      <Button 
+                        className="welcome-go-your-feed"
+                        type="link" 
+                        onClick={() => {this.handleChosenUser(loggedUser)}}
+                        icon={<HomeOutlined className="welcome-go-your-feed-icon"/>}>
+                        My Wall
+                      </Button>
+                    </span>
+                    <span className="welcome-message-sec">
+                      Welcome to the feed
+                    </span>
                   </div>
                   <Button className="welcome-new-post-button" type="primary" icon={<FormOutlined className="welcome-icon-button"/>} onClick={() => this.showModal()}>
                     Write new post
@@ -146,18 +193,29 @@ class Feed extends React.Component {
                   />
                 </NewPostModal> 
               </div>
+              <div>
+              {this.manageFeedText()}
+              </div>
               <div className="feed-posts-container">
-                {!emptyWall
+                {posts.length
                   ? [...posts].reverse().map((post) => (
                       <Post
                         key={post.postId}
                         currentUser={loggedUser}
-                        post={post}
+                        postId={post.postId}
+                        date={post.date}
                         header={post.header}
                         description={post.description}
                       />
                     ))
-                  : <spna>No Posts yet? Start to write new one</spna>}
+                  : 
+                    <Empty 
+                    className="feed-empty"
+                    imageStyle={{height: 240}}
+                    description = {
+                      this.manageEmptyWallText()
+                    }
+                    />}
               </div>
             </div>
           </Content>

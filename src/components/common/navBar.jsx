@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { LogoutOutlined, SettingOutlined } from "@ant-design/icons";
+import { HomeOutlined, LogoutOutlined, SettingOutlined } from "@ant-design/icons";
+import { Divider } from "antd";
 
 export default function Navbar({ userAuth }) {
   return (
@@ -21,18 +22,22 @@ export default function Navbar({ userAuth }) {
             <>
             <div className="nav-links-container">
               <NavLink className="nav-item nav-link" to="/logout">
-                <LogoutOutlined className="logout-icon"/>
+                <LogoutOutlined className="navBar-icon"/>
                 LogOut
               </NavLink>
+              <Divider className="nav-item-divider" type="vertical" />
               <NavLink className="nav-item nav-link" to="/">
-                {" "}
+                <HomeOutlined className="navBar-icon" />
                 Hi, {userAuth.userName}
               </NavLink>
               {userAuth.Role === "Admin" && (
+                <>
+                <Divider className="nav-item-divider" type="vertical" />
                 <NavLink className="nav-item nav-link" to="/postsDetails">
-                  <SettingOutlined className="logout-icon"/>
+                  <SettingOutlined className="navBar-icon"/>
                   Admin Panel
                 </NavLink>
+                </>
               )}
             </div>
               <Link className="navbar-brand" to="/">

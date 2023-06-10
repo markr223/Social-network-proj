@@ -3,6 +3,7 @@ import axios from "axios";
 import { Card, Space, Avatar, Button } from 'antd';
 import * as consts from "../../consts/consts";
 import CommentAndLikes from "./commentAndLikes";
+import { UserOutlined } from "@ant-design/icons";
 
 class Post extends React.Component {
   state = {};
@@ -12,7 +13,7 @@ class Post extends React.Component {
       like: {
         date: consts.currentDate,
         userId: this.props.currentUser.id,
-        postId: this.props.post.postId,
+        postId: this.props.postId,
       },
       liked: false,
       likesCount: 0,
@@ -61,6 +62,7 @@ class Post extends React.Component {
     const { header, description, date, postToManage } = this.props;
     const { liked, likesCount, like } = this.state;
     const { Meta } = Card;
+    // TODO: add user id + user name
     return (
       <Space direction="vertical" className="post-container">
         <Card 
@@ -70,11 +72,15 @@ class Post extends React.Component {
         > 
           <Meta
             className="post"
-            avatar={<Avatar className="post-avatar">UN</Avatar>}
+            avatar={<Avatar 
+              // src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${this.state.userId}`} NEED TO PUT USER-ID
+              className="post-avatar">
+                <UserOutlined />
+              </Avatar>}
             title={<div>
               <span>{header}</span>
               {postToManage && <Button type="primary" danger className="post-admin-delete">X</Button>}
-              <div className="post-title-date">{date}</div>
+              <div className="post-title-date">{date.slice(0,10)}</div>
             </div>}
             description={description}
           />

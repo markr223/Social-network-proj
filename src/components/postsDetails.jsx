@@ -16,7 +16,7 @@ class PostsDetails extends React.Component {
           <Post 
             key={post.postId}
             currentUser={post.userId}
-            post={post}
+            postId={post.postId}
             header={post.header}
             description={post.description}
             date={post.date}

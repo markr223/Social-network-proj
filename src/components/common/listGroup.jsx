@@ -1,6 +1,6 @@
 import React from "react";
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import { Avatar, Button } from 'antd';
 
 export default function ListGroup({
   dataList,
@@ -13,16 +13,17 @@ export default function ListGroup({
     <div className="list-group-container">
       <span className="list-group-title">{label}</span>
         {dataList.length ? dataList.map((item) => (
-          <ul className="list-group">
+          <Button type="primary" ghost className={`${item.id === currentItem.id && "list-group-item-selected"} list-group`} onClick={() => onChosenItem(item)}>
+            {console.log('currentItem.id', currentItem.id)}
+            {console.log('item:',item, '   ', item.id !== currentItem.id ? "list-group-item-unselected" : "list-group-item-selected")}
             <Avatar
                 key={id} 
-                className={item !== currentItem ? "list-group-item-unselected" : "list-group-item-selected"}
+                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${item.id}`}
                 size="large" 
                 icon={<UserOutlined />} 
-                onClick={() => onChosenItem(item)}
             />
             <span className="list-group-item-name">{item.userName}</span>
-          </ul>
+          </Button>
         )) : ""}
     </div>
   );

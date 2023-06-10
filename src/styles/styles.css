@@ -1,7 +1,3 @@
-:root,
-.display {
-  background-color: #212c43;
-}
 @font-face {
   font-family: 'Poppins-bold';
   src: url('../../public/Font/Poppins/Poppins-Bold.ttf');
@@ -10,6 +6,14 @@
 @font-face {
   font-family: 'Poppins';
   src: url('../../public/Font/Poppins/Poppins-Light.ttf');
+}
+
+:root,
+body{
+  font-family: Poppins;
+}
+.display {
+  background-color: #212c43;
 }
 
 .feed-posts-container{
@@ -56,13 +60,11 @@
   -webkit-backdrop-filter: blur(5px);
 }
 .form-welcome{
-  font-family: Poppins;
   margin-top: 10%;
   margin-bottom: 15%;
   font-size: 42px;
 }
 .form-subTitle{
-  font-family: Poppins;
   font-size: 24px;
   margin-left: 5%;
 }
@@ -87,11 +89,9 @@
 .post-avatar {
   background-color: #5baaec;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  place-self: flex-start;
 }
 .post-title-date{
-  font-family: Poppins;
   font-size: 12px;
   color: gainsboro;
 }
@@ -105,48 +105,67 @@
   font-family: Poppins !important;
 }
 .form-control {
-  font-family: Poppins;
   display: inline-flex;
   height: 55px;
   line-height: 1.2;
   color: #333;
   font-size: 21px;
 }
-/* textarea.form-control {
-  display: table;
-} */
 .chart-line {
   height: 50%;
   width: 100% !important;
 }
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #5baaec; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1c8be6; 
+}
 .list-group-container{
   height: 100%;
-  width: 10vh;
   display: flex;
   flex-direction: column;
   color: #5f85db;
+  overflow-x: hidden;
 }
 .list-group-title{
-  font-family: Poppins;
-  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  width: 16vh;
+  font-size: 36px;
+  color: white;
 }
 .list-group {
   display: flex;
   align-items: center;
-  margin-left: 5%;
-  width: 10vh;
-  margin-top: 2vh;
+  place-content: center;
+  margin-left: 7%;
+  width: 13vh;
+  height: 10vh;
+  margin-top: 10%;
+  padding-right: 0;
+}
+.list-group:hover {
+  background-color: #425888 !important;
+  font-size: 21px !important;
 }
 .list-group-item-unselected {
   background-color: #5baaec;
   cursor: pointer;
 }
 .list-group-item-selected {
-  background-color: black;
-  color: white;
+  background-color: white;
+  background-color: #425888 !important;
+  font-size: 21px !important;
 }
 .list-group-item-name{
-  color: #33425b;
+  color: #ffffff;
 }
 .feed {
   background-color: #212c43;
@@ -156,7 +175,7 @@
   margin-bottom: 10%;
 }
 .feed-chart-title { 
-  font-family: Poppins;
+  
   display: flex;
   justify-content: center;
   font-size: 24px;
@@ -165,7 +184,6 @@
   margin-top: 5%;
 }
 .feed-chart-nothing {
-  font-family: Poppins;
   display: flex;
   justify-content: center;
   font-size: 24px;
@@ -179,7 +197,6 @@
   justify-content: center;
 }
 .feed-post-title {
-  font-family: Poppins;
   display: flex;
   justify-content: center;
   font-size: 24px;
@@ -188,7 +205,7 @@
 }
 .post-admin-delete {
   position: absolute;
-    right: 5%;
+  right: 5%;
 }
 .formDisplay {
   position: fixed;
@@ -263,20 +280,29 @@ textarea {
   position: absolute;
   margin-top: 2%;
   margin-left: 4%;
+  background-color: green;
+}
+.welcome-new-post-button:hover{
+  display: flex;
+  align-items: center;
+  position: absolute;
+  margin-top: 2%;
+  margin-left: 4%;
+  background-color: rgb(76, 138, 76) !important;
 }
 .welcome-message{
   display: flex;
-  padding-left: 5%;
+  padding-left: 3%;
   padding-top: 2%;
   font-size: 16px;
-  font-family: sans-serif;
+  font-family: Poppins-bold;
 }
 .welcome-message-sec{
   display: flex;
   padding-left: 5%;
   font-size: 12px;
   color: darkgrey;
-  font-family: sans-serif;
+  font-family: Poppins;
 }
 .Empty-Wall {
   width: 100%;
@@ -315,16 +341,47 @@ textarea {
 .modal-footer-icon{
   display: inline-grid !important;
 }
-.logout-icon{
+.navBar-icon{
   display: inline-grid;
+  margin-right: 4px;
+}
+.nav-item-divider{
+  display: flex;
+  height: 3vh;
+  place-self: center;
+  border-color:#3e5481;
 }
 .form-signup{
-  font-family: Poppins;
   font-size: 12px;
   margin-bottom: 25px;
 }
 .form-signup-button{
-  font-family: Poppins;
   font-size: 15px;
   margin-left: -10px;
+}
+
+.feed-user-container{
+  margin-bottom: 2%;
+  font-size: 18px;
+}
+.feed-user-icon {
+  width: 40px;
+  height: 40px;
+  line-height: 38px;
+  border-radius: 50%;
+  background-color: #5baaec;
+}
+.feed-empty{
+  height: 100%;
+  margin-top: 10%;
+  font-size: 28px;
+}
+.empty-wall-text{
+  color: white;
+}
+.welcome-go-your-feed{
+  margin-top: -5px;
+}
+.welcome-go-your-feed-icon {
+  display: inline-flex !important;
 }

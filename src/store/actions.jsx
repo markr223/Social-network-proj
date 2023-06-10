@@ -24,7 +24,7 @@ export const loadPostsFromServer = () => {
 export const loadUserPostFromServer = (userId) => {
   return (dispatch) => {
     axios
-      .get(serverURI + "/api/User/GetAllUsers" + userId, defaultConfig)
+      .get(serverURI + "/api/Post/GetUserPosts/" + userId, defaultConfig)
       .then((response) => {
         dispatch(getPosts(response.data));
       })
