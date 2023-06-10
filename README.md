@@ -1,5 +1,5 @@
 ## Welcome to our final Project 
-### Mark Rabinovich, Liran Ben-Yakov, Eran Zehavi
+### Mark Rabinovich, Liran Ben-Yakov and Eran Zehavi
 
 # How To run:
 Just use 
