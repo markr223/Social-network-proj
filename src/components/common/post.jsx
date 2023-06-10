@@ -8,19 +8,6 @@ import { UserOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 
 export default function Post(props) {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     like: {
-  //       date: consts.currentDate,
-  //       userId: this.props.currentUser.id,
-  //       postId: this.props.postId,
-  //     },
-  //     liked: false,
-  //     likesCount: 0,
-  //     comments: []
-  //   };
-  // }
   const [likeData] = useState({
     date: consts.currentDate,
     userId: props.currentUser.id,
@@ -35,7 +22,6 @@ export default function Post(props) {
     try {
       const { data } = await axios.get(consts.serverURI + "/api/Comment/GetPostComments/" + postId, consts.defaultConfig)
       setComments(data);
-      // this.setState({comments: data})
     } catch (ex) {
       toast.error("failed get comments");
     }
@@ -51,9 +37,7 @@ export default function Post(props) {
       for (let postLikes of data)
         if (postLikes.userId === currentUser.id)
           setLiked(true);
-          // this.setState({ liked: true });
       setLikesCount(data.length);
-      // this.setState({ likesCount: data.length });
     } catch (ex) {
       toast.error("failed to get the likes");
     }
@@ -91,7 +75,6 @@ export default function Post(props) {
           consts.defaultConfig
         );
         setLikesCount(data.length);
-        // this.setState({ likesCount: data.length });
       } catch (ex) {
         toast.error(ex + ' Error with likes');
       }

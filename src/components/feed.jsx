@@ -34,7 +34,6 @@ class Feed extends React.Component {
       isModalOpen: false
     };
     props.getPostsFromStore();
-    console.log(this.props.loggedUser);
   }
   getAllUsers = async () => {
     try {

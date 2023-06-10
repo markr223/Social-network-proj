@@ -34,9 +34,6 @@ export const currentDate =
   (dateNow.getMonth() < 10 ? "0" + (dateNow.getMonth() + 1) : dateNow.getMonth() + 1) +
   "-" +
   dateNow.getDate();
-// export const NO_POSTS_TO_SHOW = (
-//   <h5 className="Empty-Wall">Wall Is Empty...</h5>
-// );
 
 export const serverURI = "https://d6db-5-102-196-61.ngrok-free.app";
 export const defaultConfig = {
