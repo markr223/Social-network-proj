@@ -35,7 +35,7 @@ export const currentDate =
   "-" +
   dateNow.getDate();
 
-export const serverURI = "https://d6db-5-102-196-61.ngrok-free.app";
+export const serverURI = "http://d6db-5-102-196-61.ngrok-free.app";
 export const defaultConfig = {
     headers: {
       "ngrok-skip-browser-warning": "any value",
