@@ -50,7 +50,7 @@ class PostsDetails extends React.Component {
           <Chart
             posts={posts} />
         </div>
-        <div className="feed-post-title"> Posts To Managed </div>
+        <div className="feed-post-title"> Posts To Manage </div>
           {this.createPostComponent()}
       </div>
     );

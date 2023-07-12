@@ -68,6 +68,11 @@ body{
   color: #5baaec;
   font-size: 16px;
 }
+.comment-user-name{
+  font-family: 'Poppins';
+  color: #5baaec;
+  font-size: 14px;
+}
 .post-send-comment-button{
   display: list-item;
 }
@@ -432,6 +437,9 @@ textarea {
   justify-content: center;
   margin-top: 5%;
   margin-left: 5%;
+}
+.alert-danger{
+  font-size: 14px;
 }
 :where(.css-dev-only-do-not-override-ed5zg0).ant-statistic .ant-statistic-title{
   color: white;

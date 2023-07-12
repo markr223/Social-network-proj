@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Button } from 'antd';
+import { Avatar, Button, Popconfirm} from 'antd';
 import {serverURI, defaultConfig} from "../../consts/consts";
 import { toast } from "react-toastify";
 
@@ -40,7 +40,19 @@ export default function ListGroup({
             />
             <span className="list-group-item-name">{item.userName}</span>
           </Button>
-          {manageUsers && <Button className="list-group-delete-user" type="primary" danger onClick={() => {handleRemoveUser(item.id)}}>x</Button>}
+          {manageUsers && 
+            <Popconfirm
+            title="Delete the User"
+            description="Are you sure to delete this User?"
+            onConfirm={() => {handleRemoveUser(item.id)}}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button className="list-group-delete-user" type="primary" danger>
+              x
+            </Button>
+            </Popconfirm>
+            }
           </>
         )) : ""}
     </div>

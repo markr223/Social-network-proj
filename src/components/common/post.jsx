@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Collapse, Card, Space, Avatar, Button, Divider } from 'antd';
+import { Collapse, Card, Space, Avatar, Button, Divider, Popconfirm } from 'antd';
 import * as consts from "../../consts/consts";
 import CommentAndLikes from "./commentAndLikes";
 import { UserOutlined } from "@ant-design/icons";
@@ -116,11 +116,21 @@ export default function Post(props) {
             <div className="commant-post">
               <div>
               <Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${co.userId}`} className="commant-post-avatar" />
-              <div className="commant-post-user">{co.userName}</div>
+              <Button className="comment-user-name" type="link" onClick={() => handleShowUserFeed(userId, userName)}>{userName}</Button>
               <span className="commant-post-date">{co.date.slice(0,10)}</span>
               </div>
               <span className="commant-post-description">{co.description}</span>
-              {postToManage && <Button type="primary" danger className="comment-admin-delete" onClick={() => {handleRemoveComment(co.commentId)}}>X</Button>}
+              {postToManage && 
+              <Popconfirm
+              title="Delete the comment"
+              description="Are you sure to delete this comment?"
+              onConfirm={() => {handleRemoveComment(co.commentId)}}
+              okText="Yes"
+              cancelText="No"
+              >
+                <Button type="primary" danger className="comment-admin-delete">X</Button>
+                </Popconfirm>
+                }
             </div>
               <Divider className="commant-post-divider"/>
             </>
@@ -153,9 +163,20 @@ export default function Post(props) {
               >
                 <UserOutlined />
               </Avatar>}
-            title={<div>
+              title={<div>
               <span>{header}</span>
-              {postToManage && <Button type="primary" danger className="post-admin-delete" onClick={() => handleRemovePost(postId)}>X</Button>}
+              {postToManage && 
+              <Popconfirm
+              title="Delete the Post"
+              description="Are you sure to delete this Post?"
+              onConfirm={() => handleRemovePost(postId)}
+              okText="Yes"
+              cancelText="No"
+              >
+                <Button type="primary" danger className="post-admin-delete">
+                  X
+                </Button>
+              </Popconfirm>}
               <div className="post-title-date">{date.slice(0,10)}</div>
             </div>}
             description={description}

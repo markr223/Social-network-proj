@@ -35,7 +35,7 @@ export const currentDate =
   "-" +
   dateNow.getDate();
 
-export const serverURI = "https://36a6-31-154-77-130.ngrok-free.app";
+export const serverURI = "https://f277-94-230-92-88.ngrok-free.app";
 export const defaultConfig = {
     headers: {
       "ngrok-skip-browser-warning": "any value",
@@ -43,3 +43,9 @@ export const defaultConfig = {
       "content-type": "application/json"
     }
   };
+
+export const patternLC = /[ -~]*[a-z][ -~]*/; // at least 1 lower-case
+export const patternUC = /[ -~]*[A-Z][ -~]*/; // at least 1 upper-case
+export const patternSC = /[ -~]*(?=[ -~])[^0-9a-zA-Z][ -~]*/; // basically: [ -~] && [^0-9a-zA-Z], at least 1 special character
+export const patternN = /[ -~]*[0-9][ -~]*/; // at least 1 number
+export const infoPass = "This password should be contains min 8 characters long, at least 1 lower-case, at least 1 upper-case, at least 1 number and at least 1 special character.";

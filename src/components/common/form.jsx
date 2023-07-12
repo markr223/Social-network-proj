@@ -1,7 +1,7 @@
 import React from "react";
 import Input from "./input";
-import { Button } from "antd";
-import { MailOutlined, SmallDashOutlined} from "@ant-design/icons";
+import { Button, Tooltip } from "antd";
+import { MailOutlined, SmallDashOutlined, InfoCircleFilled} from "@ant-design/icons";
 
 const Form = (props) => {
   const {formInputs,
@@ -10,8 +10,12 @@ const Form = (props) => {
     errors,
     onLoginClick,
     isLogin,
+    isSignUp,
+    onSubmit,
+    buttonLabel,
+    infoPass,
     inputTextArea} = props;
-    const addIconForLogin = (input) => {
+    const addIconForForm = (input) => {
       if(isLogin) {
         if(input.id === "email") {
           return <MailOutlined/>
@@ -19,12 +23,15 @@ const Form = (props) => {
           return <SmallDashOutlined/>
         }
       }
+      else  if(input.id === "password"){
+        return <Tooltip title={infoPass}><InfoCircleFilled/></Tooltip>
+      }
     }
   return (
     <div className="board">
       <form onSubmit={(e) => e.preventDefault()}>
         {formInputs.map((input) => (
-          <div className={isLogin ? 'login-form-container' : ''}>
+          <div className={isLogin ? 'login-form-container' : 'signup-form-container'}>
             <Input
               key={input.id}
               onChange={(e) => onInputChange(e, input.id)}
@@ -33,7 +40,7 @@ const Form = (props) => {
               type={input.type}
               error={errors[input.id]}
               inputTextArea={inputTextArea}
-              prefix={addIconForLogin(input)}
+              prefix={addIconForForm(input)}
             />
           </div>
         ))}
@@ -41,6 +48,11 @@ const Form = (props) => {
       {isLogin && <div className="formButton">
         <Button type="primary" className="formButton-login" onClick={()=> onLoginClick()}>
           Login  
+        </Button>
+      </div> }
+      {isSignUp && <div className="formButton">
+        <Button type="primary" className="formButton-login" onClick={()=> onSubmit()}>
+        {buttonLabel}  
         </Button>
       </div> }
     </div>
