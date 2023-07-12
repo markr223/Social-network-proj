@@ -116,7 +116,7 @@ export default function Post(props) {
             <div className="commant-post">
               <div>
               <Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${co.userId}`} className="commant-post-avatar" />
-              <Button className="comment-user-name" type="link" onClick={() => handleShowUserFeed(userId, userName)}>{userName}</Button>
+              <Button className="comment-user-name" type="link" onClick={() => handleShowUserFeed(co.userId, co.userName)}>{co.userName}</Button>
               <span className="commant-post-date">{co.date.slice(0,10)}</span>
               </div>
               <span className="commant-post-description">{co.description}</span>
