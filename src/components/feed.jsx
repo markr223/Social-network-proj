@@ -175,13 +175,12 @@ class Feed extends React.Component {
                 <div className="welcome-container">
                   <div>
                     <span className="welcome-message">{<SmileFilled className="welcome-icon"/>} 
-                      Hello, {loggedUser.userName} 
+                      Hello,  
                       <Button 
                         className="welcome-go-your-feed"
                         type="link" 
-                        onClick={() => {this.handleChosenUser(loggedUser)}}
-                        icon={<HomeOutlined className="welcome-go-your-feed-icon"/>}>
-                        My Wall
+                        onClick={() => {this.handleChosenUser(loggedUser)}} >
+                        {loggedUser.userName}
                       </Button>
                     </span>
                     <span className="welcome-message-sec">

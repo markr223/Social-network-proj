@@ -427,7 +427,10 @@ textarea {
   color: white;
 }
 .welcome-go-your-feed{
+  font-family: Poppins-bold;
   margin-top: -5px;
+  padding: 0px 8px;
+  font-size: 16px;
 }
 .welcome-go-your-feed-icon {
   display: inline-flex !important;

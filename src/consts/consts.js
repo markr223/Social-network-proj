@@ -35,7 +35,7 @@ export const currentDate =
   "-" +
   dateNow.getDate();
 
-export const serverURI = "https://f277-94-230-92-88.ngrok-free.app";
+export const serverURI = "https://95a5-31-154-77-130.ngrok-free.app";
 export const defaultConfig = {
     headers: {
       "ngrok-skip-browser-warning": "any value",
